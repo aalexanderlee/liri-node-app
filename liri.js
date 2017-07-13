@@ -1,5 +1,4 @@
-//AFTER YOU set up the FOUR functions for each API source, only call on them with:
-//case(actions), they will send you to the functions 
+
 
 //******** tools for twitter (case 1) *********
 
@@ -45,6 +44,7 @@ if (process.argv[2] === "my-tweets") {
 //} 
 
 
+
 //******** tools for spotify (case 2) *********
 //var spotifyRequest = require("node_modules/node-spotify-api/src/package.json"); //double check pathway
 
@@ -63,21 +63,35 @@ function spotFunction() {
 
 	var songName = process.argv.slice(3).join(" ");
 	console.log(songName);
+
+	if (songName === "") {
+		songName = "The+Sign+Ace+Of+Base"; //if empty, make our argument Ace of Base
+	}
  
-	spotify.search({ type: 'track', query: songName }, function(err, data) {
+	spotify.search({ type: 'track', query: songName, limit: 5 }, function(error, data) {
 		if (!error) {
+			// console.log(data);
 			var songList = data.tracks.items;
-			console.log(songList);
+			// console.log(songList); // lists all data from your spotify search, limit to 1 item
+ 		
 			songList.forEach(function(song) {
-				console.log(song.);
-			});
-		  // data.forEach(function(){});
-		  // console.log(data);
-		
+				var artistList = song.album.artists; // console.log(artistList);
+				var artists = [];
+				artistList.forEach(function(artist) {
+					artists.push(artist.name);
+				});
+
+				//console.log(artists.join(", "));			
+				console.log("Artists: " + artists.join(", ")); // loop through artist object to get names
+			 	console.log("Album Name: " + song.album.name); // album name from data list
+			 	console.log("Song Name: " + song.name); // song title from data list
+			 	console.log("Song Preview Link: " + song.preview_url); //preview link for data list
+				
+			 });
+
 		} else {
 			return console.log('Error occurred: ' + error);
 		}
-
 	})
 }
 
@@ -86,74 +100,87 @@ if (process.argv[2] === "spotify-this-song") {
 }
 
 
-//function spotify(){
-//Run an error function first, then proceed...Break? Continue?
-//if (process.argv[2] === "spotify-this-song" && process.argv[3] === "") {
-	//use some kind of request to grab from node-spotify-api
-	//for (var x in spotKeyList) {stick the client id/client secret into either queryURL
-		//or find in node-spotify-api, using parameters song "The Sign" and artist "Ace of Base"
-		//}
-//else { 
-	//if (there is a space " "){
-		//.join("+") 
-		//process.argv[3] === songName parameter location in node-spotify-api
-		//console log the artist name, song name, preview link, album from node-spotify-api
-		//}
-	//}
-//}
-
-
-
 
 
 //******** tools for omdb (case 3) *********
-//var request = require("request"); //double check pathway, the node_modules are downloaded
-//var movieName = process.argv[2]; //takes in movie name arg
+var request = require("request"); //use request to grab the queryURL for omdb
 
-/*var request = require("request");
-var movieName = process.argv[3];
+var movieName = process.argv.slice(3).join(" ");
 
-var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
-
-console.log(queryURL);
+if (movieName === "") {
+	movieName = "Mr.+Nobody.";
+}
 
 request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
 if (!error && response.statusCode === 200) {
-	
-	//if (there is a space in procress.argv[3]) { 
-  		//var movieName = .join("+") them	
-  		console.log(JSON.parse(body).Title);
-  		console.log(JSON.parse(body).Year);
-  		console.log(JSON.parse(body).Rated);
-  		console.log(JSON.parse(body).Ratings[2].Value);
-  		console.log(JSON.parse(body).Country);
-  		console.log(JSON.parse(body).Language);
-  		console.log(JSON.parse(body).Plot);
-  		console.log(JSON.parse(body).Actors);
-  		//}
-  	//else if (movieName === "") {
-  		//var movieName ==="Mr.+Nobody.";
-  		console.log(JSON.parse(body).Title);
-  		console.log(JSON.parse(body).Year);
-  		console.log(JSON.parse(body).Rated);
-  		console.log(JSON.parse(body).Ratings[2].Value);
-  		console.log(JSON.parse(body).Country);
-  		console.log(JSON.parse(body).Language);
-  		console.log(JSON.parse(body).Plot);
-  		console.log(JSON.parse(body).Actors);
-		//}
-	
-//} Shut the bigger if statement
- 
 
-//******** tools for omdb (case 3) *********
+	console.log("Title of Movie: " + JSON.parse(body).Title); 
+	console.log("Year of Movie: " + JSON.parse(body).Year);
+	console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+	console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+	console.log("Country of Origin: " + JSON.parse(body).Country);
+	console.log("Language of the Movie: " + JSON.parse(body).Language);
+	console.log("Plot of the Movie: " + JSON.parse(body).Plot);
+	console.log("Actors in the Movie: " + JSON.parse(body).Actors); 
+	}
+});
+
+if (process.argv[2] === "movie-this") {
+	request();
+}
+
+
+
+	
+//******** tools for fs.readFile (case 4) *********
+var fs = require("fs"); //initialize fs readFile to grab items from random.txt
+
+fs.readFile("random.txt", "utf8", function(error, data){
+	if (!error) {
+		
+		var dataArr = data.split(",");
+		//stick elements of dataArr into process.argv[2] and process.argv[3], respectively
+		//pass these through spotFunction()
+	
+	}
+});
+
+if (process.argv[2] === "do-what-it-says") {
+	fs.readFile();
+}
+
 //.readFile crap from random.txt and put it into 
 //stick it into the function spotify(){}
 
+//AFTER YOU set up the FOUR functions for each API source, only call on them with:
+//case(actions), they will send you to the functions 
 
-//ADDD CASEEEEE ACTIONS
+//in case 1-4
+// switch (action) {
+//   case "my-tweets":
+//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+//     twitter();
+//     break;
 
-*/
+//   case "spotify-this-song":
+//     spotFunction();
+//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+//     break;
+
+//   case "movie-this":
+//     request();
+//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+//     break;
+
+//   case "do-what-it-says":
+//     fs.readFile();
+//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+//     break;
+// }
+
+
+//fs.appendFile("random.txt", randomTxt)
+
 
 
