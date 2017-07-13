@@ -1,10 +1,8 @@
-
-
 //******** tools for twitter (case 1) *********
 
 var keys = require("./keys.js"); //grabs objects from key.js
 var twitKeyList = keys.twitterKeys; //grabs values from twitterKeys object
-console.log(twitKeyList);
+// console.log(twitKeyList);
 
 var Twitter = require("twitter");
 
@@ -14,6 +12,11 @@ var client = new Twitter ({
 	access_token_key: twitKeyList.access_token_key,
 	access_token_secret: twitKeyList.access_token_secret
 });
+
+var action = process.argv[2];
+console.log(action);
+var value = process.argv.slice(3);
+console.log(value);
 
 function twitter() {
 	var params = {screen_name: 'aalexanderlee08', count: 20};
@@ -26,7 +29,8 @@ function twitter() {
 		} else {
 			// console.log(error);
 			return console.log("Error Occurred: " + error);
-		}
+	
+	}
 	});
 };
 
@@ -50,7 +54,7 @@ if (process.argv[2] === "my-tweets") {
 
 var keys = require("./keys.js");
 var spotKeyList = keys.spotifyKeys;
-console.log(spotKeyList);
+// console.log(spotKeyList);
 
 var Spotify = require("node-spotify-api");
  
@@ -59,7 +63,11 @@ var spotify = new Spotify({
 	secret: spotKeyList.client_secret
 });
 
-function spotFunction() {
+// var songName = process.argv.slice(3).join(" ");
+// console.log(songName);
+
+function spotFunction(songName) {
+
 
 	var songName = process.argv.slice(3).join(" ");
 	console.log(songName);
@@ -68,7 +76,7 @@ function spotFunction() {
 		songName = "The+Sign+Ace+Of+Base"; //if empty, make our argument Ace of Base
 	}
  
-	spotify.search({ type: 'track', query: songName, limit: 5 }, function(error, data) {
+	spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
 		if (!error) {
 			// console.log(data);
 			var songList = data.tracks.items;
@@ -111,23 +119,25 @@ if (movieName === "") {
 	movieName = "Mr.+Nobody.";
 }
 
-request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
+var omdb = function(){ 
+	request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
-if (!error && response.statusCode === 200) {
+	if (!error && response.statusCode === 200) {
 
-	console.log("Title of Movie: " + JSON.parse(body).Title); 
-	console.log("Year of Movie: " + JSON.parse(body).Year);
-	console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-	console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-	console.log("Country of Origin: " + JSON.parse(body).Country);
-	console.log("Language of the Movie: " + JSON.parse(body).Language);
-	console.log("Plot of the Movie: " + JSON.parse(body).Plot);
-	console.log("Actors in the Movie: " + JSON.parse(body).Actors); 
-	}
-});
+		console.log("Title of Movie: " + JSON.parse(body).Title); 
+		console.log("Year of Movie: " + JSON.parse(body).Year);
+		console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+		console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+		console.log("Country of Origin: " + JSON.parse(body).Country);
+		console.log("Language of the Movie: " + JSON.parse(body).Language);
+		console.log("Plot of the Movie: " + JSON.parse(body).Plot);
+		console.log("Actors in the Movie: " + JSON.parse(body).Actors); 
+		}
+	});
+}
 
 if (process.argv[2] === "movie-this") {
-	request();
+	omdb();
 }
 
 
@@ -136,18 +146,43 @@ if (process.argv[2] === "movie-this") {
 //******** tools for fs.readFile (case 4) *********
 var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
-fs.readFile("random.txt", "utf8", function(error, data){
-	if (!error) {
-		
-		var dataArr = data.split(",");
-		//stick elements of dataArr into process.argv[2] and process.argv[3], respectively
-		//pass these through spotFunction()
-	
-	}
-});
+var randomFunction = function() {
+	fs.readFile("random.txt", "utf8", function(error, data){
+		if (error) {
+			console.log(error)
+		} 
+		else 
+		{
+			
+			var dataArr = data.split(",");
+			var action = dataArr[0];
+			var value = dataArr[1];
+			// switch (action) {
+			// 	case "spotify-this-song":
+			// 		spotFunction(dataArr[0]);
+			// 		break;
+			// 	case "movie-this":
+			// 		omdb(value);
+			// 		break;
+			// 	case "my-tweets":
+			// 		twitter();
+			// 		break;
+			// };
+
+			//dataArr[0] dataArr[1]
+			// spotFunction(dataArr[1]);
+			//stick elements of dataArr into process.argv[2] and process.argv[3], respectively
+			//pass these through spotFunction()
+			
+		}
+		if (action === "spotify-this-song") {
+			spotFunction(value)
+		}; 
+	});
+}
 
 if (process.argv[2] === "do-what-it-says") {
-	fs.readFile();
+	randomFunction();
 }
 
 //.readFile crap from random.txt and put it into 
@@ -156,26 +191,25 @@ if (process.argv[2] === "do-what-it-says") {
 //AFTER YOU set up the FOUR functions for each API source, only call on them with:
 //case(actions), they will send you to the functions 
 
-//in case 1-4
+// in case 1-4
 // switch (action) {
 //   case "my-tweets":
-//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+// 	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
 //     twitter();
 //     break;
-
 //   case "spotify-this-song":
-//     spotFunction();
-//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+//     spotFunction(value.join(" "));
+// 	   // fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
 //     break;
 
 //   case "movie-this":
 //     request();
-//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+// 	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
 //     break;
 
 //   case "do-what-it-says":
 //     fs.readFile();
-//	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
+// 	   fs.appendFile("random.txt", (process.argv[2] + process.argv[3]).join(","));
 //     break;
 // }
 
