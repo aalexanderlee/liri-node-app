@@ -142,17 +142,20 @@ var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
 var randomFunction = function() {
 	fs.readFile("random.txt", "utf8", function(error, data){
+
+		var dataArr = data.split(","); //action is command dataArr[0], value is parameter dataArr[1]
+		//dataArr[0] is going to be process.argv[2]
+		//dataArr[1] is going to be process.argv[3] 
+
 		if (!error) {
-
-			var action = process.argv[2]; 
+			var action = dataArr[0]; //this action is also a condition to switch to spotFunction
 			console.log(action); 
-			var value = process.argv.slice(3);
-			console.log(value); 
+			var songName = dataArr[1];
+			console.log(songName); 	
 
-			var dataArr = data.split(",");
-			console.log("Spotify Command: " + dataArr[0]); //this is going to be process.argv[2]
-			console.log("Parameter for Command: " + dataArr[1]); //this is going to be process.argv[3]
-			songName = dataArr[1];	
+			if(action === "spotify-this-song"){
+			spotFunction(songName);			
+			}
 		}
 		// if (action === "spotify-this-song") {
 		// 	spotFunction(value)
@@ -162,7 +165,6 @@ var randomFunction = function() {
 
 if (process.argv[2] === "do-what-it-says") {
 	randomFunction();
-	spotFunction(songName);
 }
 
 //Use case(actions) when you choose not to use if statements for brief notations:
