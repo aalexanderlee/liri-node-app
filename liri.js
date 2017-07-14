@@ -1,8 +1,9 @@
+
 //******** tools for twitter (case 1) *********
 
 var keys = require("./keys.js"); //grabs objects from key.js
 var twitKeyList = keys.twitterKeys; //grabs values from twitterKeys object
-// console.log(twitKeyList);
+//console.log(twitKeyList);
 
 var Twitter = require("twitter");
 
@@ -13,23 +14,22 @@ var client = new Twitter ({
 	access_token_secret: twitKeyList.access_token_secret
 });
 
-var action = process.argv[2];
-console.log(action);
-var value = process.argv.slice(3);
-console.log(value);
-
 function twitter() {
 	var params = {screen_name: 'aalexanderlee08', count: 20};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 		if(!error) {
 			tweets.forEach(function(tweet) {
+				var action = process.argv[2]; 
+				console.log(action); 
+				var value = process.argv.slice(3);
+				console.log(value); 
+
 				console.log("Tweet Text: " + tweet.text);
 				console.log("Tweet Created At: " + tweet.created_at);
 			});
 		} else {
-			// console.log(error);
-			return console.log("Error Occurred: " + error);
-	
+			//console.log(error);
+			return console.log("Error Occurred: " + error);	
 	}
 	});
 };
@@ -37,24 +37,13 @@ function twitter() {
 if (process.argv[2] === "my-tweets") {
 	twitter();
 };
-//function twitter(){
-//Run an error function first, if !error, then proceed...How do you proceed? Break? Continue?
-//If (process.argv[2] === my-tweets) {
-//Access the Twitter API. Do we have to use PHP? vvvvv
-//for (var x in twitKeyList) {stick the access keys from keys.js into a queryURL}
-//Once you do, have it iterate through the length of your API data (limited to 20)
-//Console log this stuff to the screen
-//done
-//} 
-
 
 
 //******** tools for spotify (case 2) *********
-//var spotifyRequest = require("node_modules/node-spotify-api/src/package.json"); //double check pathway
 
 var keys = require("./keys.js");
 var spotKeyList = keys.spotifyKeys;
-// console.log(spotKeyList);
+//console.log(spotKeyList);
 
 var Spotify = require("node-spotify-api");
  
@@ -63,36 +52,41 @@ var spotify = new Spotify({
 	secret: spotKeyList.client_secret
 });
 
-// var songName = process.argv.slice(3).join(" ");
-// console.log(songName);
+ //var songName = process.argv.slice(3).join(" ");
+ //console.log(songName);
 
 function spotFunction(songName) {
 
 
 	var songName = process.argv.slice(3).join(" ");
-	console.log(songName);
+	//console.log(songName);
 
 	if (songName === "") {
-		songName = "The+Sign+Ace+Of+Base"; //if empty, make our argument Ace of Base
+		songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
 	}
- 
+
 	spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
 		if (!error) {
-			// console.log(data);
+			//console.log(data);
 			var songList = data.tracks.items;
-			// console.log(songList); // lists all data from your spotify search, limit to 1 item
+			//console.log(songList) ---> lists all data from your spotify search, limit to 1 item
  		
 			songList.forEach(function(song) {
-				var artistList = song.album.artists; // console.log(artistList);
+				var artistList = song.album.artists; //console.log(artistList);
 				var artists = [];
 				artistList.forEach(function(artist) {
 					artists.push(artist.name);
 				});
+	
+				var action = process.argv[2]; 
+				console.log(action); //spotify-this-song
+				var value = process.argv.slice(3);
+				console.log(value); //songName
 
-				//console.log(artists.join(", "));			
-				console.log("Artists: " + artists.join(", ")); // loop through artist object to get names
-			 	console.log("Album Name: " + song.album.name); // album name from data list
-			 	console.log("Song Name: " + song.name); // song title from data list
+				//console.log(artists.join(", "));
+				console.log("Artists: " + artists.join(", ")); //loop through artist object to get names
+			 	console.log("Album Name: " + song.album.name); //album name from data list
+			 	console.log("Song Name: " + song.name); //song title from data list
 			 	console.log("Song Preview Link: " + song.preview_url); //preview link for data list
 				
 			 });
@@ -106,8 +100,6 @@ function spotFunction(songName) {
 if (process.argv[2] === "spotify-this-song") {
 	spotFunction();
 }
-
-
 
 
 //******** tools for omdb (case 3) *********
@@ -124,6 +116,11 @@ var omdb = function(){
 
 	if (!error && response.statusCode === 200) {
 
+		var action = process.argv[2]; 
+		console.log(action); 
+		var value = process.argv.slice(3);
+		console.log(value); 
+
 		console.log("Title of Movie: " + JSON.parse(body).Title); 
 		console.log("Year of Movie: " + JSON.parse(body).Year);
 		console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
@@ -139,56 +136,36 @@ var omdb = function(){
 if (process.argv[2] === "movie-this") {
 	omdb();
 }
-
-
-
 	
 //******** tools for fs.readFile (case 4) *********
 var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
 var randomFunction = function() {
 	fs.readFile("random.txt", "utf8", function(error, data){
-		if (error) {
-			console.log(error)
-		} 
-		else 
-		{
-			
-			var dataArr = data.split(",");
-			var action = dataArr[0];
-			var value = dataArr[1];
-			// switch (action) {
-			// 	case "spotify-this-song":
-			// 		spotFunction(dataArr[0]);
-			// 		break;
-			// 	case "movie-this":
-			// 		omdb(value);
-			// 		break;
-			// 	case "my-tweets":
-			// 		twitter();
-			// 		break;
-			// };
+		if (!error) {
 
-			//dataArr[0] dataArr[1]
-			// spotFunction(dataArr[1]);
-			//stick elements of dataArr into process.argv[2] and process.argv[3], respectively
-			//pass these through spotFunction()
-			
+			var action = process.argv[2]; 
+			console.log(action); 
+			var value = process.argv.slice(3);
+			console.log(value); 
+
+			var dataArr = data.split(",");
+			console.log("Spotify Command: " + dataArr[0]); //this is going to be process.argv[2]
+			console.log("Parameter for Command: " + dataArr[1]); //this is going to be process.argv[3]
+			songName = dataArr[1];	
 		}
-		if (action === "spotify-this-song") {
-			spotFunction(value)
-		}; 
+		// if (action === "spotify-this-song") {
+		// 	spotFunction(value)
+		// }; 
 	});
 }
 
 if (process.argv[2] === "do-what-it-says") {
 	randomFunction();
+	spotFunction(songName);
 }
 
-//.readFile crap from random.txt and put it into 
-//stick it into the function spotify(){}
-
-//AFTER YOU set up the FOUR functions for each API source, only call on them with:
+//Use case(actions) when you choose not to use if statements for brief notations:
 //case(actions), they will send you to the functions 
 
 // in case 1-4
