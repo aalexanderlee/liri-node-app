@@ -52,17 +52,17 @@ var spotify = new Spotify({
 	secret: spotKeyList.client_secret
 });
 
- //var songName = process.argv.slice(3).join(" ");
- //console.log(songName);
+  var songName = process.argv.slice(3).join(" ");
+  console.log(songName);
 
-function spotFunction(songName) {
+function spotFunction() {
 
 
 	var songName = process.argv.slice(3).join(" ");
-	//console.log(songName);
+	console.log(songName);
 
 	if (songName === "") {
-		songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
+	 	songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
 	}
 
 	spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
@@ -142,20 +142,37 @@ var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
 var randomFunction = function() {
 	fs.readFile("random.txt", "utf8", function(error, data){
-
-		var dataArr = data.split(","); //action is command dataArr[0], value is parameter dataArr[1]
-		//dataArr[0] is going to be process.argv[2]
-		//dataArr[1] is going to be process.argv[3] 
-
 		if (!error) {
-			var action = dataArr[0]; //this action is also a condition to switch to spotFunction
-			console.log(action); 
-			var songName = dataArr[1];
-			console.log(songName); 	
+			var dArr = [];
+			dArr.push(data);
+			console.log("This is our random.txt data array: " + dArr);
 
-			if(action === "spotify-this-song"){
-			spotFunction(songName);			
-			}
+			//var process.argv[2] = dArr[0];
+			//var process.argv[3] = dArr[1];
+			var songName = dArr[1];
+			spotFunction(songName);
+
+			// var dataArr = data.split(","); //action is command dataArr[0], value is parameter dataArr[1]
+			// console.log(dataArr);
+			//dataArr[0] is going to be process.argv[2]
+			//dataArr[1] is going to be process.argv[3] 
+
+		
+			// var action = dataArr[0]; //this action is also a condition to switch to spotFunction
+			// console.log(action); 
+			// var songName = dataArr[1];
+			// console.log(songName); 	
+
+			// if (process.argv[2] === "do-what-it-says") {
+			// 	//var songName = dataArr[1].join("+");
+			// 	spotFunction(dataArr[1]);
+
+
+			//}
+
+			// if(action === "spotify-this-song"){
+			// spotFunction(songName);			
+			// }
 		}
 		// if (action === "spotify-this-song") {
 		// 	spotFunction(value)
@@ -164,7 +181,7 @@ var randomFunction = function() {
 }
 
 if (process.argv[2] === "do-what-it-says") {
-	randomFunction();
+ 	randomFunction();
 }
 
 //Use case(actions) when you choose not to use if statements for brief notations:
