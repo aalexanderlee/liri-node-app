@@ -55,15 +55,16 @@ var spotify = new Spotify({
   var songName = process.argv.slice(3).join(" ");
   console.log(songName);
 
-function spotFunction() {
+function spotFunction(songName) {
 
 
-	var songName = process.argv.slice(3).join(" ");
-	console.log(songName);
+	 var songName = process.argv.slice(3).join(" ");
+	 console.log(songName);
 
-	if (songName === "") {
-	 	songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
-	}
+	  if (songName === "") {
+	   	songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
+	   	spotFunction(songName);
+	  }
 
 	spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
 		if (!error) {
@@ -143,38 +144,14 @@ var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 var randomFunction = function() {
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (!error) {
-			//var dArr = [];
-			var dataArr = data.split(",");
-			//dArr.push(data);
+			
+			var dataArr = data.split(",");			
 			console.log("This is our random.txt data array: " , dataArr);
 
-			//var process.argv[2] = dArr[0];
-			//var process.argv[3] = dArr[1];
 			if (dataArr[0] === 'spotify-this-song');
 			var songName = dataArr[1];
 			spotFunction(songName);
 
-			// var dataArr = data.split(","); //action is command dataArr[0], value is parameter dataArr[1]
-			// console.log(dataArr);
-			//dataArr[0] is going to be process.argv[2]
-			//dataArr[1] is going to be process.argv[3] 
-
-		
-			// var action = dataArr[0]; //this action is also a condition to switch to spotFunction
-			// console.log(action); 
-			// var songName = dataArr[1];
-			// console.log(songName); 	
-
-			// if (process.argv[2] === "do-what-it-says") {
-			// 	//var songName = dataArr[1].join("+");
-			// 	spotFunction(dataArr[1]);
-
-
-			//}
-
-			// if(action === "spotify-this-song"){
-			// spotFunction(songName);			
-			// }
 		}
 		// if (action === "spotify-this-song") {
 		// 	spotFunction(value)
