@@ -63,7 +63,6 @@ console.log(songName);
 
 function spotFunction(songName) {
 
-
 	 var songName = process.argv.slice(3).join(" ");
 	 console.log(songName);
 
@@ -99,7 +98,7 @@ function spotFunction(songName) {
 			 	fs.appendFile("log.txt", "Artists: " + artists.join(", ") + "\n");
 			 	fs.appendFile("log.txt", "Album Name: " + song.album.name + "\n");
 			 	fs.appendFile("log.txt", "Song Name: " + song.name + "\n");
-			 	fs.appendFile("log.txt","Song Preview Link: " + song.preview_url + "\n");
+			 	fs.appendFile("log.txt", "Song Preview Link: " + song.preview_url + "\n");
 			 	fs.appendFile("log.txt", "\n");
 				
 			 });
