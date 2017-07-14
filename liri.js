@@ -63,12 +63,12 @@ console.log(songName);
 
 function spotFunction(songName) {
 
-	 var songName = process.argv.slice(3).join(" ");
-	 console.log(songName);
+	var songName = process.argv.slice(3).join(" ");
+	console.log(songName);
 
-	  if (songName === "") {
+	if (songName === "") {
 	   	songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
-	  }
+	}
 
 	spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
 		if (!error) {
