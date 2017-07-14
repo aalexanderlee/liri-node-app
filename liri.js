@@ -18,7 +18,7 @@ var client = new Twitter ({
 function twitter() {
 	var params = {screen_name: 'aalexanderlee08', count: 20};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-		if(!error) {
+		if(!error && response.statusCode == 200) {
 			tweets.forEach(function(tweet) {
 				var action = process.argv[2]; 
 				console.log(action); 
@@ -28,10 +28,14 @@ function twitter() {
 				console.log("Tweet Text: " + tweet.text);
 				console.log("Tweet Created At: " + tweet.created_at);
 				fs.appendFile("log.txt", "\n");
+				if (error) throw error;
 				fs.appendFile("log.txt", "Tweet Text: " + tweet.text + "\n");
+				if (error) throw error;
 				fs.appendFile("log.txt", "Tweet Created At: " + tweet.created_at + "\n");
+				if (error) throw error;
 				fs.appendFile("log.txt", "\n");
-
+				if (error) throw error;
+				 
 			});
 		} else {
 			//console.log(error);
@@ -95,11 +99,17 @@ function spotFunction(songName) {
 			 	console.log("Song Preview Link: " + song.preview_url); //preview link for data list
 
 			 	fs.appendFile("log.txt", "\n");
+			 	if (error) throw error;
 			 	fs.appendFile("log.txt", "Artists: " + artists.join(", ") + "\n");
+			 	if (error) throw error;
 			 	fs.appendFile("log.txt", "Album Name: " + song.album.name + "\n");
+			 	if (error) throw error;
 			 	fs.appendFile("log.txt", "Song Name: " + song.name + "\n");
+			 	if (error) throw error;
 			 	fs.appendFile("log.txt", "Song Preview Link: " + song.preview_url + "\n");
+			 	if (error) throw error;
 			 	fs.appendFile("log.txt", "\n");
+			 	if (error) throw error;
 				
 			 });
 
@@ -143,15 +153,25 @@ var omdb = function(){
 		console.log("Actors in the Movie: " + JSON.parse(body).Actors); 
 
 		fs.appendFile("log.txt", "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Title of Movie: " + JSON.parse(body).Title + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Year of Movie: " + JSON.parse(body).Year + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "IMDB Rating: " + JSON.parse(body).imdbRating + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Country of Origin: " + JSON.parse(body).Country + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Language of the Movie: " + JSON.parse(body).Language + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Plot of the Movie: " + JSON.parse(body).Plot + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "Actors in the Movie: " + JSON.parse(body).Actors + "\n");
+		if (error) throw error;
 		fs.appendFile("log.txt", "\n");
+		if (error) throw error;
 		
 		}
 	});
