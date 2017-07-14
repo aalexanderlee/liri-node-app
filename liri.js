@@ -141,15 +141,17 @@ if (process.argv[2] === "movie-this") {
 var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
 var randomFunction = function() {
-	fs.readFile("random.txt", "utf8", function(error, data){
+	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (!error) {
-			var dArr = [];
-			dArr.push(data);
-			console.log("This is our random.txt data array: " + dArr);
+			//var dArr = [];
+			var dataArr = data.split(",");
+			//dArr.push(data);
+			console.log("This is our random.txt data array: " , dataArr);
 
 			//var process.argv[2] = dArr[0];
 			//var process.argv[3] = dArr[1];
-			var songName = dArr[1];
+			if (dataArr[0] === 'spotify-this-song');
+			var songName = dataArr[1];
 			spotFunction(songName);
 
 			// var dataArr = data.split(","); //action is command dataArr[0], value is parameter dataArr[1]
