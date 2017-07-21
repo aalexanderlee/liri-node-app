@@ -70,6 +70,10 @@ function spotFunction(songName) {
 	var songName = process.argv.slice(3).join(" ");
 	console.log(songName);
 
+	// if (process.argv[2] === "do-what-it-says") {
+	// 	fs.readFile("random.txt" )
+	// }
+
 	if (songName === "") {
 	   	songName = "The+Sign+Ace+Of+Base"; //if empty, make our parameter Ace of Base song
 	}
@@ -191,10 +195,11 @@ var randomFunction = function() {
 			var dataArr = data.split(",");			
 			console.log("This is our random.txt data array: " , dataArr);
 
-			if (dataArr[0] === 'spotify-this-song');
+			if (dataArr[0] === 'spotify-this-song') {
 			var songName = dataArr[1];
 			spotFunction(songName);
 
+			}
 		}
 		// if (action === "spotify-this-song") {
 		// 	spotFunction(value)
