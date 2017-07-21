@@ -1,4 +1,4 @@
-var fs = require("fs");
+var fs = require("fs"); 
 
 //******** tools for twitter (case 1) *********
 
@@ -27,14 +27,15 @@ function twitter() {
 
 				console.log("Tweet Text: " + tweet.text);
 				console.log("Tweet Created At: " + tweet.created_at);
-				fs.appendFile("log.txt", "\n");
-				if (error) throw error;
-				fs.appendFile("log.txt", "Tweet Text: " + tweet.text + "\n");
-				if (error) throw error;
-				fs.appendFile("log.txt", "Tweet Created At: " + tweet.created_at + "\n");
-				if (error) throw error;
-				fs.appendFile("log.txt", "\n");
-				if (error) throw error;
+				//Uncomment to access appending feature to log.txt
+				// fs.appendFile("log.txt", "\n");
+				// if (error) throw error;
+				// fs.appendFile("log.txt", "Tweet Text: " + tweet.text + "\n");
+				// if (error) throw error;
+				// fs.appendFile("log.txt", "Tweet Created At: " + tweet.created_at + "\n");
+				// if (error) throw error;
+				// fs.appendFile("log.txt", "\n");
+				// if (error) throw error;
 				 
 			});
 		} else {
@@ -62,13 +63,13 @@ var spotify = new Spotify({
 	secret: spotKeyList.client_secret
 });
 
-var songName = process.argv.slice(3).join(" ");
-console.log(songName);
+ // var songName = process.argv.slice(3).join(" ");
+ // console.log(songName);
 
 function spotFunction(songName) {
 
-	var songName = process.argv.slice(3).join(" ");
-	console.log(songName);
+	 var songName = process.argv.slice(3).join(" ");
+	 console.log(songName);
 
 	// if (process.argv[2] === "do-what-it-says") {
 	// 	fs.readFile("random.txt" )
@@ -102,18 +103,19 @@ function spotFunction(songName) {
 			 	console.log("Song Name: " + song.name); //song title from data list
 			 	console.log("Song Preview Link: " + song.preview_url); //preview link for data list
 
-			 	fs.appendFile("log.txt", "\n");
-			 	if (error) throw error;
-			 	fs.appendFile("log.txt", "Artists: " + artists.join(", ") + "\n");
-			 	if (error) throw error;
-			 	fs.appendFile("log.txt", "Album Name: " + song.album.name + "\n");
-			 	if (error) throw error;
-			 	fs.appendFile("log.txt", "Song Name: " + song.name + "\n");
-			 	if (error) throw error;
-			 	fs.appendFile("log.txt", "Song Preview Link: " + song.preview_url + "\n");
-			 	if (error) throw error;
-			 	fs.appendFile("log.txt", "\n");
-			 	if (error) throw error;
+			 	//Uncomment to access appending feature to log.txt
+			 	// fs.appendFile("log.txt", "\n");
+			 	// if (error) throw error;
+			 	// fs.appendFile("log.txt", "Artists: " + artists.join(", ") + "\n");
+			 	// if (error) throw error;
+			 	// fs.appendFile("log.txt", "Album Name: " + song.album.name + "\n");
+			 	// if (error) throw error;
+			 	// fs.appendFile("log.txt", "Song Name: " + song.name + "\n");
+			 	// if (error) throw error;
+			 	// fs.appendFile("log.txt", "Song Preview Link: " + song.preview_url + "\n");
+			 	// if (error) throw error;
+			 	// fs.appendFile("log.txt", "\n");
+			 	// if (error) throw error;
 				
 			 });
 
@@ -156,26 +158,27 @@ var omdb = function(){
 		console.log("Plot of the Movie: " + JSON.parse(body).Plot);
 		console.log("Actors in the Movie: " + JSON.parse(body).Actors); 
 
-		fs.appendFile("log.txt", "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Title of Movie: " + JSON.parse(body).Title + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Year of Movie: " + JSON.parse(body).Year + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "IMDB Rating: " + JSON.parse(body).imdbRating + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Country of Origin: " + JSON.parse(body).Country + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Language of the Movie: " + JSON.parse(body).Language + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Plot of the Movie: " + JSON.parse(body).Plot + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "Actors in the Movie: " + JSON.parse(body).Actors + "\n");
-		if (error) throw error;
-		fs.appendFile("log.txt", "\n");
-		if (error) throw error;
+		//Uncomment to access appending feature to log.txt
+		// fs.appendFile("log.txt", "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Title of Movie: " + JSON.parse(body).Title + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Year of Movie: " + JSON.parse(body).Year + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "IMDB Rating: " + JSON.parse(body).imdbRating + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Country of Origin: " + JSON.parse(body).Country + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Language of the Movie: " + JSON.parse(body).Language + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Plot of the Movie: " + JSON.parse(body).Plot + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "Actors in the Movie: " + JSON.parse(body).Actors + "\n");
+		// if (error) throw error;
+		// fs.appendFile("log.txt", "\n");
+		// if (error) throw error;
 		
 		}
 	});
@@ -188,16 +191,43 @@ if (process.argv[2] === "movie-this") {
 //******** tools for fs.readFile (case 4) *********
 var fs = require("fs"); //initialize fs readFile to grab items from random.txt
 
-var randomFunction = function() {
+var randomFunction = function(songName) {
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		if (!error) {
 			
 			var dataArr = data.split(",");			
 			console.log("This is our random.txt data array: " , dataArr);
 
-			if (dataArr[0] === 'spotify-this-song') {
-			var songName = dataArr[1];
-			spotFunction(songName);
+			if (dataArr[0] === 'spotify-this-song' && dataArr[1] === '"I Want It That Way"') {
+				//console.log(dataArr[1]); //"I Want It That Way"	
+				var songName = dataArr[1];
+				console.log(songName);
+
+				spotify.search({ type: 'track', query: songName, limit: 3 }, function(error, data) {
+					if (!error) {
+						//console.log(data);
+						var songList = data.tracks.items;
+						//console.log(songList) ---> lists all data from your spotify search, limit to 1 item
+			 		
+						songList.forEach(function(song) {
+							var artistList = song.album.artists; //console.log(artistList);
+							var artists = [];
+							artistList.forEach(function(artist) {
+								artists.push(artist.name);
+							});
+
+							console.log("Artists: " + artists.join(", ")); //loop through artist object to get names
+						 	console.log("Album Name: " + song.album.name); //album name from data list
+						 	console.log("Song Name: " + song.name); //song title from data list
+						 	console.log("Song Preview Link: " + song.preview_url); //preview link for data list
+							
+						 });
+
+					} else {
+						return console.log('Error occurred: ' + error);
+					}
+				})
+				
 
 			}
 		}
@@ -211,7 +241,7 @@ if (process.argv[2] === "do-what-it-says") {
  	randomFunction();
 }
 
-//Use case(actions) when you choose not to use if statements for brief notations:
+//Use case(actions) when you choose not to use if-statements for brief notations:
 //case(actions), they will send you to the functions 
 
 // in case 1-4
